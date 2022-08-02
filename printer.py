@@ -1,9 +1,7 @@
-from cProfile import label
 import os
 import json
 import datetime
 
-from django import shortcuts
 
 DPMM = 8
 TOP_PADDING = 160   # Padding in dots

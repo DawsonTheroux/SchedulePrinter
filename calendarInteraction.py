@@ -1,5 +1,4 @@
 import os
-from django.conf import ENVIRONMENT_VARIABLE
 import requests
 import json
 import datetime
