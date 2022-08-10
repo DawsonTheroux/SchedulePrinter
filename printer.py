@@ -104,6 +104,9 @@ def generateEventString(height, event):
     height += timeHeight + 10
     return eventString, height
 
+def printDocument():
+    os.system("lp -d ZebraTextOnly output_files/output.txt")
+    
 def createDocument(eventsArray):
     labelWidth =  80 * DPMM
     height = TOP_PADDING

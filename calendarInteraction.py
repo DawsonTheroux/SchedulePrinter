@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import requests
 import json
@@ -90,7 +91,7 @@ def createPrinterFile():
 
 def main():
     createPrinterFile()
-
+    printer.printDocument()
 
 if __name__ == "__main__":
     main()
