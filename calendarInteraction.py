@@ -86,8 +86,9 @@ def getListOfEvents():
     return eventsList
 
 def createPrinterFile():
-    evntsList = getListOfEvents()
-    printer.createDocument(evntsList)
+    eventsList = getListOfEvents()
+    print(f"\n\nThe events list is: \n {eventsList}")
+    printer.createDocument(eventsList)
 
 def main():
     createPrinterFile()

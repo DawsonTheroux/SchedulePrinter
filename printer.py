@@ -32,16 +32,14 @@ def solidBar(height):
     return f"^FO0,{height}^FD^GB620,5,10^FS\n"   # Bar at the Top
 
 
-def generateTitle(height, title):
+def generateText(height, title, fontHeight = 50, fontWidth = 28):
     labelWidth = 80 * DPMM - 10 # minus 10 for padding
-    x = 30              # The x location of the title
-    padding = 10        # The padding to add under the title text
-    fontHeight = 50     
-    fontWidth = 28
+    x = 30                      # The x location of the title
+    padding = 10                # The padding to add under the title text
     returnString = ""   
     currentLine = ""
-    curWidth = 0        # Current line width used in wrapping logic.
-    height = height     # I added this because I don't know if there would be scope issues.
+    curWidth = 0                # Current line width used in wrapping logic.
+    height = height             # I added this because I don't know if there would be scope issues.
     
     words = title.split(" ")
     while len(words) > 0:
@@ -90,21 +88,44 @@ def generateEventString(height, event):
     x = 30
     eventString = ""
     timeHeight = 30
-    titleString, height = generateTitle(height, event["summary"])
-    # titleString, height = generateTitle(height, "THIS IS A REALLY VERY SUPER LONG TITLE PELASE BE AWARE")
+    titleHeight = 50
+    titleWidth = 28
+
+    if "summary" in event.keys():
+        titleString, height = generateText(height, event["summary"], titleHeight, titleWidth)
+    else:
+        titleString, height = generateText(height, "**NO TITLE**", titleHeight, titleWidth)
+
     eventString += titleString
     
-    # Generate start time
-    sTime = timeString(event["start"]["dateTime"])
-    eventString += f"^FO{x},{height}^ADN,{timeHeight}^FDStart - {sTime}^FS\n"
-    height += timeHeight + 10
-    # Generate end time
-    eTime = timeString(event["end"]["dateTime"])
-    eventString += f"^FO{x},{height}^ADN,{timeHeight}^FDEnd   - {eTime}^FS\n"
-    height += timeHeight + 10
+    # Check if the event has a time.
+    if "dateTime" in event["start"] and "dateTime" in  event["end"]:
+        # Generate start time
+        sTime = timeString(event["start"]["dateTime"])
+        eventString += f"^FO{x},{height}^ADN,{timeHeight}^FDStart - {sTime}^FS\n"
+        height += timeHeight + 10
+        # Generate end time
+        eTime = timeString(event["end"]["dateTime"])
+        eventString += f"^FO{x},{height}^ADN,{timeHeight}^FDEnd   - {eTime}^FS\n"
+        height += timeHeight + 10
+    else:
+        eventString += f"^FO{x},{height}^ADN,{timeHeight}^FDAll Day Event^FS\n"
+        height += timeHeight + 10
+        
     return eventString, height
 
+def documentFromString(inputStr):
+    labelWidth = 80 * DPMM
+    height = TOP_PADDING
+    labelString = ""
+
+    # Split the string using \n
+    # Using the label width and height using my wrapping functionality
+    # Output the string. Maybe think about adding some font size functionality.
+    
+
 def printDocument():
+    ''' print the document in output_files/output.txt using lp '''
     os.system("lp -d ZebraTextOnly output_files/output.txt")
     
 def createDocument(eventsArray):
