@@ -33,7 +33,7 @@ def sendGetRequest(url, paramDict, token):
     headers = {}
     headers["Authorization"] = f"Bearer {token}"
     r = requests.get(url, params=paramDict, headers = headers)
-    print(f"\n\nThe Request URL was: {r.url}\n\n\\")        
+    #print(f"\n\nThe Request URL was: {r.url}\n\n\\")        
     return r
 
 
@@ -57,7 +57,7 @@ def getDateTimeTomorrow(day=None):
 def getListOfEvents():
     refreshDict = json.loads(refreshToken())
     accessToken = refreshDict["access_token"]
-    print(f"Printing the refresh dict: {refreshDict}")
+    #print(f"Printing the refresh dict: {refreshDict}")
     paramsDict = {}
     eventsList = []
     
@@ -87,7 +87,7 @@ def getListOfEvents():
 
 def createPrinterFile():
     eventsList = getListOfEvents()
-    print(f"\n\nThe events list is: \n {eventsList}")
+    #print(f"\n\nThe events list is: \n {eventsList}")
     printer.createDocument(eventsList)
 
 def main():
